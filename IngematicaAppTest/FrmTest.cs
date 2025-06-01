@@ -87,7 +87,7 @@ namespace IngematicaAppTest
 
             double diasAAgregar = Convert.ToDouble(objetoTipoTransporte.CoeficineteDemora) * Convert.ToDouble(objetoLocalidad.DiasDemora);
 
-            // Si es por autopista, aplica la lógica de negocio
+            
             CalculoService calculoService = new CalculoService();
             bool esAutopista = chkAutopista.Checked;
 
@@ -99,8 +99,7 @@ namespace IngematicaAppTest
 
             diasAAgregar = Math.Ceiling(diasAAgregar);
             double diasDemora = diasAAgregar;
-            
-            // Calcular fecha destino sin contar sábados y domingos
+           
             while (diasAAgregar > 0)
             {
                 fechaDestino = fechaDestino.AddDays(1);
@@ -110,12 +109,14 @@ namespace IngematicaAppTest
                 }
             }
 
-            long milisegundosOriginal = new DateTimeOffset(fechaDestino).ToUnixTimeMilliseconds();
-            long incremento = (long)(milisegundosOriginal * 0.1);
-            long nuevosMilisegundos = milisegundosOriginal + incremento;
-            fechaDestino = DateTimeOffset.FromUnixTimeMilliseconds(nuevosMilisegundos).UtcDateTime;
-
-
+            if (porRuta)
+            {
+                DateTime fechaOriginal = dtpFechaInicial.Value;
+                double porcentaje = 0.1;
+                TimeSpan incremento = TimeSpan.FromDays(fechaOriginal.Day * porcentaje);
+                DateTime nuevaFecha = fechaOriginal.Add(incremento);
+                fechaDestino = nuevaFecha;
+            }
 
             txtDiasDemora.Text = diasDemora.ToString();
             txtFechaLlegada.Text = fechaDestino.ToString();
@@ -134,7 +135,12 @@ namespace IngematicaAppTest
 
         private void chkAutopista_CheckedChanged(object sender, EventArgs e)
         {
+            chkRuta.Checked = false;
+        }
 
+        private void chkRuta_CheckedChanged(object sender, EventArgs e)
+        {
+            chkAutopista.Checked = false;
         }
     }
 }

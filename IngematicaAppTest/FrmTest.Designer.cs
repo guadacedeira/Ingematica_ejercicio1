@@ -125,6 +125,7 @@
             // 
             this.txtFechaLlegada.Location = new System.Drawing.Point(160, 97);
             this.txtFechaLlegada.Name = "txtFechaLlegada";
+            this.txtFechaLlegada.ReadOnly = true;
             this.txtFechaLlegada.Size = new System.Drawing.Size(165, 24);
             this.txtFechaLlegada.TabIndex = 3;
             // 
@@ -141,6 +142,7 @@
             // 
             this.txtDiasDemora.Location = new System.Drawing.Point(160, 56);
             this.txtDiasDemora.Name = "txtDiasDemora";
+            this.txtDiasDemora.ReadOnly = true;
             this.txtDiasDemora.Size = new System.Drawing.Size(165, 24);
             this.txtDiasDemora.TabIndex = 1;
             // 
@@ -191,6 +193,7 @@
             this.chkRuta.Size = new System.Drawing.Size(104, 24);
             this.chkRuta.TabIndex = 10;
             this.chkRuta.Text = "Ruta";
+            this.chkRuta.CheckedChanged += new System.EventHandler(this.chkRuta_CheckedChanged);
             // 
             // FrmTest
             // 
